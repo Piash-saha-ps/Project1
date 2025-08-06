@@ -250,7 +250,7 @@ margin-left: 10px;
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="item" class="form-label text-white">item <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control bg-dark text-white border-secondary" id="Item " name="Item " required>
+                                            <input type="text" class="form-control bg-dark text-white border-secondary" id="item " name="item " required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="productType" class="form-label text-white">Product Type <span class="text-danger">*</span></label>
