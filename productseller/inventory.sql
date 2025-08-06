@@ -1,7 +1,11 @@
 
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    quantity INT NOT NULL,
-    expiry_date DATE DEFAULT NULL -- if you want to use "near expiry" logic
+    date_time DATETIME NOT NULL,
+    item VARCHAR(100) NOT NULL,
+    product_type VARCHAR(100) NOT NULL,
+    quantity_change DECIMAL(10,2) NOT NULL,
+    adjustment_reason TEXT,
+    adjustment_type VARCHAR(50),
+    notes TEXT
 );

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $dateTime = $adjustmentDate . ' ' . $adjustmentTime;
 
-        $sql = "INSERT INTO sellerstock (date_time, item, product_type, quantity_change, adjustment_reason, adjustment_type, notes)
+        $sql = "INSERT INTO inventory (date_time, item, product_type, quantity_change, adjustment_reason, adjustment_type, notes)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
