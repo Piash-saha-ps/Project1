@@ -2,68 +2,55 @@
 include 'includes/config.php';
 include 'includes/functions.php';
 
-
-// Check if form is submitted for stock adjustment
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and sanitize input for stock adjustment
-    $item = sanitize($_POST['item']);
-    $productType = sanitize($_POST['productType']);
-    $quantityChange = (float) $_POST['quantityChange'];
-    $adjustmentReason = sanitize($_POST['adjustmentReason']);
-    $adjustmentDate = sanitize($_POST['adjustmentDate']);
-    $adjustmentTime = sanitize($_POST['adjustmentTime']);
-    $adjustmentType = sanitize($_POST['adjustmentType']); // 'add' or 'subtract'
-    $notes = sanitize($_POST['notes']);
+    // Get form input values safely
+    $item = $_POST['item'] ?? '';
+    $productType = $_POST['productType'] ?? '';
+    $quantityChange = $_POST['quantityChange'] ?? 0;
+    $adjustmentReason = $_POST['adjustmentReason'] ?? '';
+    $adjustmentType = $_POST['adjustmentType'] ?? '';
+    $notes = $_POST['notes'] ?? '';
+    $adjustmentDate = $_POST['adjustmentDate'] ?? '';
+    $adjustmentTime = $_POST['adjustmentTime'] ?? '';
 
-    // Validate required fields
     $errors = [];
 
-    //if (empty($item)) {
-        //$errors[] = "item is required";}
+    // ✅ Basic validation
+    if (empty($item)) $errors[] = "Item is required.";
+    if (empty($productType)) $errors[] = "Product type is required.";
+    if (!is_numeric($quantityChange)) $errors[] = "Quantity must be a number.";
+    if (empty($adjustmentReason)) $errors[] = "Reason is required.";
+    if (empty($adjustmentType)) $errors[] = "Adjustment type is required.";
+    if (empty($adjustmentDate) || empty($adjustmentTime)) $errors[] = "Date & Time are required.";
 
-    if (empty($productType)) {
-        $errors[] = "Product Type is required";
-    }
+    // ✅ If no validation errors, insert into DB
+    if (empty($errors)) {
+        $dateTime = $adjustmentDate . ' ' . $adjustmentTime;
 
-    if ($quantityChange === 0) {
-        $errors[] = "Quantity change cannot be zero";
-    }
-
-    if (empty($adjustmentReason)) {
-        $errors[] = "Adjustment Reason is required";
-    }
-
-    if (empty($adjustmentDate)) {
-        $errors[] = "Adjustment Date is required";
-    }
-
-    if (empty($adjustmentTime)) {
-        $errors[] = "Adjustment Time is required";
-    }
-
-    if (empty($adjustmentType)) {
-        $errors[] = "Adjustment Type is required";
-    }
-
-    // If no errors, insert adjustment data into the database
-    if (empty($errors)) 
-    {
-        /////////////// Prepare the SQL query to insert adjustment data into th table////////////////
         $sql = "INSERT INTO sellerstock (date_time, item, product_type, quantity_change, adjustment_reason, adjustment_type, notes)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
         $stmt = $conn->prepare($sql);
-        $dateTime = $adjustmentDate . ' '. $adjustmentTime;
-        $stmt->bind_param("sssdsss", $dateTime, $item, $productType, $quantityChange, $adjustmentReason, $adjustmentType, $notes);
-        $stmt->execute();
 
-        // Set success message
-        $_SESSION['success_message'] = "Stock adjustment recorded successfully";
-        // Redirect or clear form if needed
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        if ($stmt) {
+            $stmt->bind_param("sssdsss", $dateTime, $item, $productType, $quantityChange, $adjustmentReason, $adjustmentType, $notes);
+            
+            if ($stmt->execute()) {
+                echo "✅ Stock adjustment added successfully!";
+            } else {
+                echo "❌ Execution error: " . $stmt->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "❌ Prepare failed: " . $conn->error;
+        }
+    } else {
+        foreach ($errors as $e) {
+            echo "<p style='color:red;'>⚠️ $e</p>";
+        }
     }
 }
-
 ?>
 
 <!DOCTYPE html>

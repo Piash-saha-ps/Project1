@@ -1,18 +1,10 @@
-CREATE TABLE sellerstock (
+CREATE TABLE IF NOT EXISTS sellerstock (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    date_time DATETIME NOT NULL,
     item VARCHAR(100) NOT NULL,
-    quantity INT NOT NULL,
-    added_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    product_type VARCHAR(100) NOT NULL,
+    quantity_change DECIMAL(10,2) NOT NULL,
+    adjustment_reason TEXT,
+    adjustment_type VARCHAR(50),
+    notes TEXT
 );
-
-
-
-
-
-
-
-
-
-
-ALTER TABLE sellerstock
-ADD date_time DATETIME DEFAULT CURRENT_TIMESTAMP;
