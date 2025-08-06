@@ -4,3 +4,15 @@ CREATE TABLE sellerstock (
     quantity INT NOT NULL,
     added_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE sellerstock
+ADD date_time DATETIME DEFAULT CURRENT_TIMESTAMP;

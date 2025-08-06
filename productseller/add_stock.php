@@ -2,6 +2,7 @@
 include 'includes/config.php';
 include 'includes/functions.php';
 
+
 // Check if form is submitted for stock adjustment
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input for stock adjustment
