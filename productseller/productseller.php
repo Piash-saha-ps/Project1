@@ -39,7 +39,7 @@ if (isset($_SESSION['success_message'])) {
             </div>
             
             <nav class="sidebar-nav">
-                <a href="../samiul/dashboard.php" class="nav-item ">
+                <a href="../piash/dashboard.php" class="nav-item ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="3" y1="9" x2="21" y2="9"></line>
@@ -55,7 +55,7 @@ if (isset($_SESSION['success_message'])) {
                     </svg>
                     <span class="nav-item-name">Analytics</span>
                 </a> -->
-                <a href="../samiul/add_stock.php" class="nav-item">
+                <a href="../piash/add_stock.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="1" y="3" width="15" height="13"></rect>
                         <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
