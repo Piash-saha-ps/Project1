@@ -248,7 +248,7 @@ $conn->close(); // Close connection at the very end of the script
 </a>
 
 
-<a href="..\jugumaya\dashboard-1.php" class="nav-item active">
+<a href="..\piash\dashboard-1.php" class="nav-item active">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
         <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
