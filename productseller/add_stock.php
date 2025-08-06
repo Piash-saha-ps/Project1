@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form input values safely
     $item = $_POST['item'] ?? '';
     $productType = $_POST['productType'] ?? '';
-    $quantityChange = $_POST['quantityChange'] ?? 0;
+    $quantity = $_POST['quantity'] ?? 0;
     $adjustmentReason = $_POST['adjustmentReason'] ?? '';
     $adjustmentType = $_POST['adjustmentType'] ?? '';
     $notes = $_POST['notes'] ?? '';
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ✅ Basic validation
     if (empty($item)) $errors[] = "Item is required.";
     if (empty($productType)) $errors[] = "Product type is required.";
-    if (!is_numeric($quantityChange)) $errors[] = "Quantity must be a number.";
+    if (!is_numeric($quantity)) $errors[] = "Quantity must be a number.";
     if (empty($adjustmentReason)) $errors[] = "Reason is required.";
     if (empty($adjustmentType)) $errors[] = "Adjustment type is required.";
     if (empty($adjustmentDate) || empty($adjustmentTime)) $errors[] = "Date & Time are required.";
@@ -27,13 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $dateTime = $adjustmentDate . ' ' . $adjustmentTime;
 
-        $sql = "INSERT INTO inventory (date_time, item, product_type, quantity_change, adjustment_reason, adjustment_type, notes)
+        $sql = "INSERT INTO inventory (date_time, item, product_type, quantity, adjustment_reason, adjustment_type, notes)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
 
         if ($stmt) {
-            $stmt->bind_param("sssdsss", $dateTime, $item, $productType, $quantityChange, $adjustmentReason, $adjustmentType, $notes);
+            $stmt->bind_param("sssdsss", $dateTime, $item, $productType, $quantity, $adjustmentReason, $adjustmentType, $notes);
             
             if ($stmt->execute()) {
                 echo "✅ Stock adjustment added successfully!";
@@ -265,8 +265,8 @@ margin-left: 10px;
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label for="quantityChange" class="form-label text-white">Quantity Change (kg) <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control bg-dark text-white border-secondary" id="quantityChange" name="quantityChange" step="0.01" required>
+                                            <label for="quantity" class="form-label text-white">Quantity  (kg) <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control bg-dark text-white border-secondary" id="quantity" name="quantity" step="0.01" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="adjustmentReason" class="form-label text-white">Reason for Adjustment <span class="text-danger">*</span></label>
@@ -330,7 +330,7 @@ margin-left: 10px;
                                                 <th class="text-white">Date & Time</th>
                                                 <th class="text-white">Item </th>
                                                 <th class="text-white">Product Type</th>
-                                                <th class="text-white">Quantity Change</th>
+                                                <th class="text-white">Quantity </th>
                                                 <th class="text-white">Reason</th>
                                                 <th class="text-white">Type</th>
                                                 <th class="text-white">Notes</th>
@@ -349,7 +349,7 @@ margin-left: 10px;
                                                             <td class='text-white'>" . $rowAdjustment['date_time'] . "</td>
                                                             <td class='text-white'>" . $rowAdjustment['Item '] . "</td>
                                                             <td class='text-white'>" . $rowAdjustment['product_type'] . "</td>
-                                                            <td class='text-white'>" . ($rowAdjustment['quantity_change'] > 0 ? '+' : '') . $rowAdjustment['quantity_change'] . " kg</td>
+                                                            <td class='text-white'>" . ($rowAdjustment['quantity'] > 0 ? '+' : '') . $rowAdjustment['quantity'] . " kg</td>
                                                             <td class='text-white'>" . $rowAdjustment['adjustment_reason'] . "</td>
                                                             <td class='text-white'>" . ucfirst($rowAdjustment['adjustment_type']) . "</td>
                                                             <td class='text-white'>" . $rowAdjustment['notes'] . "</td>
@@ -396,7 +396,7 @@ margin-left: 10px;
         stockAdjustmentForm.addEventListener('submit', function(event) {
             const item = document.getElementById('item').value;
             const productType = document.getElementById('productType').value;
-            const quantityChange = document.getElementById('quantityChange').value;
+            const quantity = document.getElementById('quantity').value;
             const adjustmentReason = document.getElementById('adjustmentReason').value;
             const adjustmentDate = document.getElementById('adjustmentDate').value;
             const adjustmentTime = document.getElementById('adjustmentTime').value;
@@ -407,7 +407,7 @@ margin-left: 10px;
 
             if (!item) errors.push('item is required');
             if (!productType) errors.push('Product Type is required');
-            if (!quantityChange || parseFloat(quantityChange) === 0) errors.push('Quantity change cannot be zero');
+            if (!quantityChange || parseFloat(quantityChange) === 0) errors.push('Quantity  cannot be zero');
             if (!adjustmentReason) errors.push('Reason for Adjustment is required');
             if (!adjustmentDate) errors.push('Adjustment Date is required');
             if (!adjustmentTime) errors.push('Adjustment Time is required');

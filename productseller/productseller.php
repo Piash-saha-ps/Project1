@@ -184,7 +184,7 @@ if (isset($_SESSION['success_message'])) {
             // We check for $conn here because we cannot change dbConnection.php to handle connection errors gracefully
             if ($conn) {
                 // Fetch Total Inventory
-                $sql_total_inventory = "SELECT SUM(quantity) AS total FROM inventory";
+                $sql_total_inventory = "SELECT SUM( quantity) AS total FROM inventory";
                 $result_total_inventory = $conn->query($sql_total_inventory);
                 if ($result_total_inventory) {
                     if ($row = $result_total_inventory->fetch_assoc()) {
@@ -209,7 +209,7 @@ if (isset($_SESSION['success_message'])) {
 
                 // --- Fetch Inventory and Order Data for Table from Database ---
                 $inventory_data = [];
-                $sql_inventory = "SELECT id, name, quantity FROM inventory ORDER BY name ASC"; // Select necessary columns
+                $sql_inventory = "SELECT id, quantity FROM inventory ORDER BY name ASC"; // Select necessary columns
                 $result_inventory = $conn->query($sql_inventory);
 
                 if ($result_inventory) {
@@ -473,7 +473,7 @@ if (isset($_SESSION['success_message'])) {
                                             <?php foreach ($inventory_data as $item): ?>
                                                  <tr>
                                                      <td class="text-white">INV-<?= htmlspecialchars($item['id']) ?></td> <td class="text-white">Inventory</td>
-                                                     <td class="text-white"><?= htmlspecialchars($item['name']) ?></td>
+                                    
                                                      <td class="text-white"><?= htmlspecialchars($item['quantity']) ?></td>
                                                      <td class="text-white">In Stock</td>
                                                      <td class="text-white action-buttons">
