@@ -1,16 +1,22 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "project"; // ✅ must match the name of your database in phpMyAdmin
+// Database connection
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "project"; 
 
-$conn = new mysqli($host, $user, $password, $dbname);
 
-// Error check
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
 if ($conn->connect_error) {
-    die("❌ Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
+} else{
+
+    echo "db connection successful";
+
 }
 
-// Character set
-$conn->set_charset("utf8mb4");
 ?>
+

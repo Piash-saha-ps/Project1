@@ -1,11 +1,9 @@
-
+-- Suggested SQL for the 'inventory' table
 CREATE TABLE IF NOT EXISTS inventory (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    date_time DATETIME NOT NULL,
-    item VARCHAR(100) NOT NULL,
-    product_type VARCHAR(100) NOT NULL,
-    quantity DECIMAL(10,2) NOT NULL,
-    adjustment_reason TEXT,
-    adjustment_type VARCHAR(50),
-    notes TEXT
+    name VARCHAR(255) NOT NULL UNIQUE, -- Item name
+    quantity INT NOT NULL DEFAULT 0,  -- Current stock quantity (use DECIMAL if needed for weight)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
