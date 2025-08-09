@@ -18,11 +18,11 @@ if (isset($_SESSION['success_message'])) {
 
 // Fetch all inventory items
 $inventoryItems = [];
-$conn = getdbConnection(); // Assuming this function exists in dbConnection.php
+ // Assuming this function exists in dbConnection.php
 if ($conn) {
     $sql_inventory = "SELECT id, name, quantity, price FROM inventory ORDER BY name ASC";
     $result_inventory = $conn->query($sql_inventory);
-
+G
     if ($result_inventory) {
         while ($row = $result_inventory->fetch_assoc()) {
             $inventoryItems[] = $row;

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $conn = getdbConnection();
+        
         if ($conn) {
             $sql = "INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)";
             if ($stmt = $conn->prepare($sql)) {

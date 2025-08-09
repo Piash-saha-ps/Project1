@@ -13,7 +13,6 @@ $itemId = filter_var($_POST['item_id'] ?? null, FILTER_VALIDATE_INT);
 if ($itemId === false || $itemId <= 0) {
     $_SESSION['error_message'] = "Invalid item ID provided for deletion.";
 } else {
-    $conn = getdbConnection();
     if ($conn) {
         $sql = "DELETE FROM inventory WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {

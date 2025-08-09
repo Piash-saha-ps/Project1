@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit();
     }
 
-    $conn = getdbConnection();
     if ($conn) {
         $sql = "SELECT id, name, quantity, price FROM inventory WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {
@@ -70,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if (empty($errors)) {
-        $conn = getdbConnection();
+     
         if ($conn) {
             $sql = "UPDATE inventory SET name = ?, quantity = ?, price = ? WHERE id = ?";
             if ($stmt = $conn->prepare($sql)) {
