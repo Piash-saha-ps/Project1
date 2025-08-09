@@ -21,18 +21,18 @@ $inventoryItems = [];
  // Assuming this function exists in dbConnection.php
 if ($conn) {
     $sql_inventory = "SELECT id, name, quantity, price FROM inventory ORDER BY name ASC";
-    $result_inventory = $conn->query($sql_inventory);
-G
-    if ($result_inventory) {
-        while ($row = $result_inventory->fetch_assoc()) {
-            $inventoryItems[] = $row;
-        }
-        $result_inventory->free();
-    } else {
-        $error_message = "Database error fetching inventory: " . $conn->error;
-        error_log("MySQL Query Error (productseller.php): " . $conn->error);
+$result_inventory = $conn->query($sql_inventory);
+
+if ($result_inventory) {
+    while ($row = $result_inventory->fetch_assoc()) {
+        $inventoryItems[] = $row;
     }
-    $conn->close();
+    $result_inventory->free();
+} else {
+    $error_message = "Database error fetching inventory: " . $conn->error;
+    error_log("MySQL Query Error (productseller.php): " . $conn->error);
+}
+$conn->close();
 } else {
     $error_message = "Database connection failed.";
 }
