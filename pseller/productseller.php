@@ -55,7 +55,7 @@ if ($result && $result->num_rows > 0) {
 
 // Fetch Inventory and Order Details
 $sqlTable = "SELECT i.id, i.product_type, c.customer_name, i.quantity, i.status 
-             FROM invent 
+             FROM invent i
              LEFT JOIN customers c ON i.customer_id = c.id
              ORDER BY i.id DESC"; // Example query, adjust to your table structure
 $tableData = [];
