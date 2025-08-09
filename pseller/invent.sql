@@ -8,3 +8,5 @@ CREATE TABLE invent (
     expiry_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE invent ADD COLUMN customer_id INT(11) NULL;

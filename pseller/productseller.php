@@ -36,7 +36,7 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Fetch Today's Orders
-$sqlTodaysOrders = "SELECT COUNT(*) as total_orders FROM orders WHERE order_date >= CURDATE()";
+$sqlTodaysOrders = "SELECT COUNT(*) as total_orders FROM ord WHERE order_date >= CURDATE()";
 $result = $conn->query($sqlTodaysOrders);
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
