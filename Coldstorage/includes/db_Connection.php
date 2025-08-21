@@ -2,7 +2,7 @@
 // db_connection.php
 
 $host = 'localhost';
-$dbname = 'project';
+$dbname = 'inventory';
 $username = 'root';
 $password = ''; // If no password in XAMPP
 
