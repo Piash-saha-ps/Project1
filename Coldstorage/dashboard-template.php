@@ -143,7 +143,7 @@ if (isset($_GET['delete_transport'])) {
 }
 
 // Fetch transport data with sensor information
-$sqlTable = $conn->query("
+$transport_result = $conn->query("
     SELECT t.*, s.sensor_name, s.temperature, s.humidity 
     FROM transport t 
     LEFT JOIN sensor s ON t.sensor_id = s.sensor_id 
