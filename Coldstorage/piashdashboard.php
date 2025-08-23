@@ -143,49 +143,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Define getColdStorageUnits() to return available units
-function getColdStorageUnits() {
-    return [
-        ['id' => 1, 'name' => 'Cold Storage A'],
-        ['id' => 2, 'name' => 'Cold Storage B'],
-        ['id' => 3, 'name' => 'Cold Storage C'],
-        ['id' => 4, 'name' => 'Freezer 1'],
-        ['id' => 5, 'name' => 'Freezer 2'],
-    ];
-}
-
-// Define sanitize_input function
-if (!function_exists('sanitize_input')) {
-    function sanitize_input($data) {
-        return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
-    }
-}
-
-// Define save_loss_event function if not already defined in includes/functions.php
-if (!function_exists('save_loss_event')) {
-    function save_loss_event($eventData) {
-        global $conn;
-        $stmt = $conn->prepare("INSERT INTO loss_events (event_date, product, batch, quantity, reason, value, unit_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        if (!$stmt) {
-            throw new Exception("Database error: " . $conn->error);
-        }
-        $stmt->bind_param(
-            "sssidsi",
-            $eventData['event_date'],
-            $eventData['product'],
-            $eventData['batch'],
-            $eventData['quantity'],
-            $eventData['reason'],
-            $eventData['value'],
-            $eventData['unit_id']
-        );
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
-    }
-}
-
-$units = getColdStorageUnits();
+// $units = getColdStorageUnits(); // Removed undefined function call
 $error = '';
 $success = '';
 
@@ -224,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Report Loss - <?= SITE_NAME ?></title>
+    <title>Report Loss - <?= CSM_SITE_NAME ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
