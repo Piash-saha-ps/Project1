@@ -143,7 +143,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// $units = getColdStorageUnits(); // Removed undefined function call
+$units = getColdStorageUnits();
 $error = '';
 $success = '';
 
