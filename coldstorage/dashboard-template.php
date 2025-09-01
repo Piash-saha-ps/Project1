@@ -963,7 +963,7 @@ $storageIdsJson = json_encode($storageIds);
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
-                <a href="../piash/add_stock.php" class="nav-item">
+                <a href="../All/add_stock.php" class="nav-item">
                     <i class="bi bi-box-seam-fill"></i>
                     <span class="nav-item-name">Stock Entry</span>
                 </a>
