@@ -100,7 +100,39 @@ if (isset($_SESSION['success_message'])) {
                 </a>
             </nav>
         </aside>
-
+            
+            <nav class="sidebar-nav">
+                <a href="../All/dashboard.php" class="nav-item ">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span class="nav-item-dashboard">Dashboard</span>
+                </a>
+                <a href="../All/add_stock.php" class="nav-item">
+                    <i class="bi bi-box-seam-fill"></i>
+                    <span class="nav-item-name">Stock Entry</span>
+                </a>
+                <a href="dashboard-template.php" class="nav-item active">
+                    <i class="bi bi-thermometer-half"></i>
+                    <span class="nav-item-name">Cold Storage</span>
+                </a>
+                <a href="../lossaduitor/dashboard-1.php" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span class="nav-item-name" style="margin-left: 8px;">Loss Auditor</span>
+                </a>
+                <a href="../productseller/productseller.php" class="nav-item">
+                    <i class="bi bi-gear-fill"></i>
+                    <span class="nav-item-name">Sales</span>
+                </a>
+                <a href="../piash/loss_dashboard.php" class="nav-item">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="nav-item-name">Preventive Measures</span>
+                </a>
+            </nav>
+        </aside>
         <!-- Main Content -->
         <main class="main-content">
             <!-- Header -->
