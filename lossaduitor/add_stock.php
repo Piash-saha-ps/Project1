@@ -150,8 +150,8 @@ $conn->close(); // Close connection at the end of the script
          <aside class="sidebar">
              <div class="sidebar-header">
                 <div class="logo">
-                    <img src="logo.png" alt="Brandson Logo" width="28" height="28">
-                    <span class="brand-name">Brandson</span>
+                    <img src="logo.png" alt="IN" width="28" height="28">
+                    <span class="brand-name">Inventory</span>
                 </div>
             </div>
 

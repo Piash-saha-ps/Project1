@@ -1,4 +1,4 @@
-http://localhost/brandson/samiul/dashboard.php
+http://localhost/inventory/piash/dashboard.php
 
 FROM this link you can access every dashboard
 
