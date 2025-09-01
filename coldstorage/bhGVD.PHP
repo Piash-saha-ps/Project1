@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="sidebar-header">
                 <div class="logo">
                     <img src="logo.png" alt="Brandson Logo" width="28" height="28">
-                    <span class="brand-name">Brandson</span>
+                    <span class="brand-name">Inventory_Management</span>
                 </div>
             </div>
             

@@ -954,16 +954,16 @@ $storageIdsJson = json_encode($storageIds);
             <div class="sidebar-header">
                 <div class="logo">
                     <img src="logo.png" alt="Brandson Logo" width="28" height="28">
-                    <span class="brand-name">Brandson</span>
+                    <span class="brand-name">Inventory_Management</span>
                 </div>
             </div>
             
             <nav class="sidebar-nav">
-                <a href="../samiul/dashboard.php" class="nav-item ">
+                <a href="../piash/dashboard.php" class="nav-item ">
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
-                <a href="../samiul/add_stock.php" class="nav-item">
+                <a href="../piash/add_stock.php" class="nav-item">
                     <i class="bi bi-box-seam-fill"></i>
                     <span class="nav-item-name">Stock Entry</span>
                 </a>
@@ -971,7 +971,7 @@ $storageIdsJson = json_encode($storageIds);
                     <i class="bi bi-thermometer-half"></i>
                     <span class="nav-item-name">Cold Storage</span>
                 </a>
-                <a href="../jugumaya/dashboard-1.php" class="nav-item">
+                <a href="../piash/dashboard-1.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
@@ -980,11 +980,11 @@ $storageIdsJson = json_encode($storageIds);
                     </svg>
                     <span class="nav-item-name" style="margin-left: 8px;">Loss Auditor</span>
                 </a>
-                <a href="../raisa/productseller.php" class="nav-item">
+                <a href="../piash/productseller.php" class="nav-item">
                     <i class="bi bi-gear-fill"></i>
                     <span class="nav-item-name">Sales</span>
                 </a>
-                <a href="../saif/loss_dashboard.php" class="nav-item">
+                <a href="../piash/loss_dashboard.php" class="nav-item">
                     <i class="bi bi-box-arrow-right"></i>
                     <span class="nav-item-name">Preventive Measures</span>
                 </a>

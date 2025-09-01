@@ -1,7 +1,7 @@
 <?php
 // Database connection parameters
 $host = 'localhost';         // Change this to your database host
-$db = 'brandson';  // Your database name
+$db = 'inventory';  // Your database name
 $user = 'root';     // Your database username
 $pass = '';     // Your database password
 
