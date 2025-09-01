@@ -959,7 +959,7 @@ $storageIdsJson = json_encode($storageIds);
             </div>
             
             <nav class="sidebar-nav">
-                <a href="../piash/dashboard.php" class="nav-item ">
+                <a href="../lossaduitor/dashboard.php" class="nav-item ">
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
