@@ -97,11 +97,8 @@ if (isset($_SESSION['success_message'])) {
                         <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
                     <span class="nav-item-name">Log Out</span>
-                </a>
-            </nav>
-        </aside>
-            
-            <nav class="sidebar-nav">
+                </a>          
+    
                 <a href="../All/dashboard.php" class="nav-item ">
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span class="nav-item-dashboard">Dashboard</span>
