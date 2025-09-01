@@ -980,7 +980,7 @@ $storageIdsJson = json_encode($storageIds);
                     </svg>
                     <span class="nav-item-name" style="margin-left: 8px;">Loss Auditor</span>
                 </a>
-                <a href="../piash/productseller.php" class="nav-item">
+                <a href="../productseller/productseller.php" class="nav-item">
                     <i class="bi bi-gear-fill"></i>
                     <span class="nav-item-name">Sales</span>
                 </a>
