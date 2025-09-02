@@ -984,10 +984,6 @@ $storageIdsJson = json_encode($storageIds);
                     <i class="bi bi-gear-fill"></i>
                     <span class="nav-item-name">Sales</span>
                 </a>
-                <a href="../piash/loss_dashboard.php" class="nav-item">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span class="nav-item-name">Preventive Measures</span>
-                </a>
             </nav>
         </aside>
 
