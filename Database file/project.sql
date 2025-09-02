@@ -227,7 +227,7 @@ INSERT INTO `sensor` (`sensor_id`, `temperature`, `humidity`, `sensor_name`) VAL
 --
 
 CREATE TABLE `stockdata` (
-  `batch_id` varchar(50) NOT NULL,
+  `batch` varchar(50) NOT NULL,
   `type` varchar(255) NOT NULL,
   `quantity` decimal(10,2) NOT NULL,
   `supplier` varchar(255) NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE `stockdata` (
 -- Dumping data for table `stockdata`
 --
 
-INSERT INTO `stockdata` (`batch_id`, `type`, `quantity`, `supplier`, `cost`, `processing_date`, `expiration_Date`, `location`, `date_added`, `coldstorage_id`, `farm_manager_id`) VALUES
+INSERT INTO `stockdata` (`batch`, `type`, `quantity`, `supplier`, `cost`, `processing_date`, `expiration_Date`, `location`, `date_added`, `coldstorage_id`, `farm_manager_id`) VALUES
 ('10001', 'Lamb', 120.00, 'Supplier D', 6.00, '2025-05-06', '2025-06-30', 'Cold Storage D', '2025-05-06 20:52:37', 104, NULL),
 ('10002', 'Lamb', 75.00, 'Supplier E', 4.50, '2025-05-06', '2025-06-20', 'Cold Storage E', '2025-05-06 20:52:37', 105, NULL),
 ('10003', 'Lamb', 200.00, 'Supplier F', 7.20, '2025-05-06', '2025-07-10', 'Cold Storage F', '2025-05-06 20:52:37', 106, NULL),
@@ -354,7 +354,7 @@ ALTER TABLE `sensor`
 -- Indexes for table `stockdata`
 --
 ALTER TABLE `stockdata`
-  ADD PRIMARY KEY (`batch_id`),
+  ADD PRIMARY KEY (`batch`),
   ADD KEY `fk_coldstorage_id` (`coldstorage_id`),
   ADD KEY `agro_fk` (`farm_manager_id`);
 
