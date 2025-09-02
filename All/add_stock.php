@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /////////////// Prepare the SQL query to insert data into the stockData table////////////////
         $sql = "INSERT INTO stockData (type, batch, quantity, supplier, cost, processing_date, expiration_date, location) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssdsssss", $type, $batch, $quantity, $supplier, $cost, $processingDate, $expirationDate, $location);
         $stmt->execute();
