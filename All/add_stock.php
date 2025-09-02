@@ -110,14 +110,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </svg>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
-                <!-- <a href="analytics.php" class="nav-item">
+                <a href="analytics.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
                         <line x1="12" y1="20" x2="12" y2="4"></line>
                         <line x1="6" y1="20" x2="6" y2="14"></line>
                     </svg>
                     <span class="nav-item-name">Analytics</span>
-                </a> -->
+                </a>
                 <a href="../All/add_stock.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="1" y="3" width="15" height="13"></rect>
@@ -133,8 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </svg>
     <span class="nav-item-name">Cold Storage</span>
 </a>
-
-
 <a href="..\lossaduitor\dashboard-1.php" class="nav-item active">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
@@ -157,6 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </a>
             </nav>
         </aside>
+            
+
         <!-- Main Content -->
         <main class="main-content">
             <!-- Header -->
