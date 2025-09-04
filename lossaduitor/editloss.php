@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id']) && is_numeric($_G
     $loss_id = sanitize($_GET['id']);
 
     // Fetch the existing loss data from the loststock table
-    $sql_fetch = "SELECT loss_id, date_time, facility, stage, product_type, quantity_lost, loss_reason, evidence FROM loststock WHERE loss_id = ?";
+    $sql_fetch = "SELECT loss_id, date_time, facility, stage, product_type, quantity_lost, loss_reason FROM loststock WHERE loss_id = ?";
 
     if ($stmt_fetch = $conn->prepare($sql_fetch)) {
         $stmt_fetch->bind_param("i", $loss_id);
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id']) && is_numeric($_G
     $lossReason = sanitize($_POST['lossReason']);
     $lossDate = sanitize($_POST['lossDate']);
     $lossTime = sanitize($_POST['lossTime']);
-    $evidence = sanitize($_POST['evidence']);
+    
 
      // Combine date and time for the database
     $dateTime = $lossDate . ' ' . $lossTime;
@@ -82,12 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id']) && is_numeric($_G
     // If no errors, update the loss data in the database
     if (empty($errors)) {
         // Prepare the SQL query to update the loststock table
-        $sql_update = "UPDATE loststock SET date_time = ?, facility = ?, stage = ?, product_type = ?, quantity_lost = ?, loss_reason = ?, evidence = ? WHERE loss_id = ?";
+        $sql_update = "UPDATE loststock SET date_time = ?, facility = ?, stage = ?, product_type = ?, quantity_lost = ?, loss_reason = ? WHERE loss_id = ?";
 
         if ($stmt_update = $conn->prepare($sql_update)) {
-            // Note: Adjust the bind_param types if 'evidence' can be NULL or different type
-            $stmt_update->bind_param("sssssssi", $dateTime, $facility, $stage, $productType, $quantityLost, $lossReason, $evidence, $loss_id);
-
+            $stmt_update->bind_param("ssssssi", $dateTime, $facility, $stage, $productType, $quantityLost, $lossReason,$loss_id);
             if ($stmt_update->execute()) {
                 if ($stmt_update->affected_rows > 0) {
                     $_SESSION['success_message'] = "Loss entry updated successfully.";
@@ -118,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id']) && is_numeric($_G
         'product_type' => $productType,
         'quantity_lost' => $_POST['quantityLost'], // Use original string input
         'loss_reason' => $lossReason,
-        'evidence' => $evidence,
         'lossDate' => $lossDate,
         'lossTime' => $lossTime,
         'date_time' => $dateTime // Keep the combined date_time if needed elsewhere
@@ -389,12 +386,7 @@ $conn->close();
                                                  <input type="time" class="form-control bg-dark text-white border-secondary" id="lossTime" name="lossTime" value="<?= htmlspecialchars($lossData['lossTime'] ?? '') ?>" required>
                                             </div>
                                         </div>
-                                         <div class="row mb-3">
-                                            <div class="col-md-12">
-                                                 <label for="evidence" class="form-label text-white">Evidence</label>
-                                                 <input type="text" class="form-control bg-dark text-white border-secondary" id="evidence" name="evidence" value="<?= htmlspecialchars($lossData['evidence'] ?? '') ?>">
-                                            </div>
-                                        </div>
+
                                         <div class="d-flex gap-2">
                                             <button type="submit" class="btn-modern-update">
                                                  <div class="btn-content">
