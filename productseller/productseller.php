@@ -324,7 +324,7 @@ $conn->close();
                         <div class="card card-custom h-100">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                 <h5 class="card-title text-center">Quick Actions</h5>
-                                <a href="addproductseller.php" class="btn btn-success my-2 w-75">
+                                <a href="add_stock.php" class="btn btn-success my-2 w-75">
                                     <i class="bi bi-plus-circle"></i> Add New Productseller Entry
                                 </a>
                                 <a href="productseller.php" class="btn btn-info my-2 w-75">
@@ -358,8 +358,8 @@ $conn->close();
                                                 <td><?= htmlspecialchars($row['quantity']) ?></td>
                                                 <td><?= htmlspecialchars($row['adjustment_reason']) ?></td>
                                                 <td class="text-center">
-                                                    <a href="editproductseller.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
-                                                    <a href="deleteproductseller.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this productseller entry?');"><i class="bi bi-trash"></i></a>
+                                                    <a href="editstock.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="delete_stock.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this productseller entry?');"><i class="bi bi-trash"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
