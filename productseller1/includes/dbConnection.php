@@ -3,7 +3,7 @@
 $servername = "localhost"; 
 $username = "root"; 
 $password = ""; 
-$dbname = "int"; 
+$dbname = "productseller_db"; 
 
 
 // Create connection
