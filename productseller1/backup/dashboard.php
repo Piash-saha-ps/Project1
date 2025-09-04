@@ -644,14 +644,14 @@ if (isset($_SESSION['success_message'])) {
                 data: {
                     labels: ['Beef', 'Chicken', 'Lamb', 'Other'],
                     datasets: [{
-                        <?php
+                    <?php
                     // Assuming you have a valid database connection
                     include 'includes/config.php';
-
+                    
                     // SQL query to get the count of each meat type
                     $sql = "SELECT type, COUNT(*) as count FROM stockData GROUP BY type";
                     $result = $conn->query($sql);
-
+                    
                     // Prepare the data to be passed to JavaScript
                     $meatData = [
                         'Beef' => 0,
@@ -659,18 +659,17 @@ if (isset($_SESSION['success_message'])) {
                         'Lamb' => 0,
                         'Other' => 0
                     ];
-
+                    
                     // Loop through the results and update the meatData array
                     while ($row = $result->fetch_assoc()) {
                         if (array_key_exists($row['type'], $meatData)) {
                             $meatData[$row['type']] = (int)$row['count'];
                         }
                     }
-
+                    
                     // Convert the PHP array to JSON and pass it to JavaScript
-                    $meatDataJson = json_encode($meatData);
                     ?>
-                        data: [45, 32, 18, 5],
+                                            data: <?php echo json_encode([$meatData['Beef'], $meatData['Chicken'], $meatData['Lamb'], $meatData['Other']]); ?>,
                         backgroundColor: [
                             '#a855f7',
                             '#ec4899',
