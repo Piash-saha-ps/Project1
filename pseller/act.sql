@@ -1,6 +1,0 @@
-CREATE TABLE activity_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    action VARCHAR(100) NOT NULL,
-    description TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-);
