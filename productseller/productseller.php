@@ -191,22 +191,30 @@ $conn->close();
                     <span class="nav-item-name">Cold Storage</span>
                 </a>
                 <a href="..\lossaduitor\dashboard-1.php" class="nav-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
                         <line x1="12" y1="8" x2="12" y2="12" />
                         <line x1="12" y1="16" x2="12.01" y2="16" />
                     </svg>
                     <span class="nav-item-name">Loss Auditor</span>
                 </a>
-                <a href="../productseller/productseller.php" class="nav-item active">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <a href="productseller-dashboard.php" class="nav-item active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M16 12H8" />
                         <path d="M12 8v8" />
                     </svg>
                     <span class="nav-item-name">Productseller</span>
+                </a>
+                 <a href="orders-dashboard.php" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="10" y2="9" />
+                    </svg>
+                    <span class="nav-item-name">Orders</span>
                 </a>
             </nav>
         </aside>
@@ -413,7 +421,6 @@ $conn->close();
                 }
             });
 
-            // Replicate header search behavior for the form filter
             const headerSearchInput = document.querySelector('.header .search-input');
             const filterFormSearchInput = document.getElementById('search-term-filter');
             const headerSearchButton = document.querySelector('.header button[type="submit"]');

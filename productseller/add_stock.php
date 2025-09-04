@@ -44,7 +44,7 @@ $conn->close();
             <div class="col-md-8 mx-auto">
                 <div class="card p-4">
                     <h2 class="card-title text-center mb-4">Add New Productseller Entry</h2>
-                    <form action="addstock.php" method="POST">
+                    <form action="add_stock.php" method="POST">
                         <div class="mb-3">
                             <label for="date_time" class="form-label">Date & Time</label>
                             <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>

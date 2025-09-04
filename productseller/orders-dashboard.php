@@ -4,30 +4,19 @@ include 'includes/dbConnection.php';
 include 'includes/functions.php';
 session_start();
 
-$success_message = '';
-if (isset($_SESSION['success_message'])) {
-    $success_message = $_SESSION['success_message'];
-    unset($_SESSION['success_message']);
-}
-
-$info_message = '';
-if (isset($_SESSION['info_message'])) {
-    $info_message = $_SESSION['info_message'];
-    unset($_SESSION['info_message']);
-}
-
-$error_message = '';
-if (isset($_SESSION['error_message'])) {
-    $error_message = $_SESSION['error_message'];
-    unset($_SESSION['error_message']);
-}
+$success_message = $_SESSION['success_message'] ?? '';
+unset($_SESSION['success_message']);
+$info_message = $_SESSION['info_message'] ?? '';
+unset($_SESSION['info_message']);
+$error_message = $_SESSION['error_message'] ?? '';
+unset($_SESSION['error_message']);
 
 $startDate = $_GET['start-date'] ?? '';
 $endDate = $_GET['end-date'] ?? '';
 $productType = $_GET['product-type'] ?? 'All';
 $searchTerm = $_GET['search-term'] ?? '';
 
-$sqlAggregate = "SELECT product_type, SUM(quantity) AS total_productseller FROM productseller";
+$sqlAggregate = "SELECT product_type, SUM(quantity) AS total_quantity FROM orders";
 
 $where_clauses = [];
 $params = [];
@@ -49,7 +38,7 @@ if ($productType != 'All') {
     $param_types .= "s";
 }
 if (!empty($searchTerm)) {
-    $where_clauses[] = "(product_type LIKE ? OR adjustment_reason LIKE ?)";
+    $where_clauses[] = "(product_type LIKE ? OR customer_name LIKE ?)";
     $likeTerm = '%' . $searchTerm . '%';
     $params[] = $likeTerm;
     $params[] = $likeTerm;
@@ -62,24 +51,23 @@ if (count($where_clauses) > 0) {
 
 $sqlAggregate .= " GROUP BY product_type";
 
-$productsellerDataAggregate = [];
+$orderDataAggregate = [];
 if ($stmtAggregate = $conn->prepare($sqlAggregate)) {
     if (count($params) > 0) {
         $stmtAggregate->bind_param($param_types, ...$params);
     }
     $stmtAggregate->execute();
     $resultAggregate = $stmtAggregate->get_result();
-
     while ($row = $resultAggregate->fetch_assoc()) {
-        $productsellerDataAggregate[$row['product_type']] = $row['total_productseller'];
+        $orderDataAggregate[$row['product_type']] = $row['total_quantity'];
     }
     $stmtAggregate->close();
 } else {
     $error_message = "Error fetching aggregated data: " . $conn->error;
 }
 
-$chartLabels = array_keys($productsellerDataAggregate);
-$chartData = array_values($productsellerDataAggregate);
+$chartLabels = array_keys($orderDataAggregate);
+$chartData = array_values($orderDataAggregate);
 $chartColors = [
     'Apparel' => '#0d6efd',
     'Electronics' => '#fd7e14',
@@ -92,7 +80,7 @@ foreach($chartLabels as $label) {
     $chartBackgroundColor[] = $chartColors[$label] ?? '#6c757d';
 }
 
-$sqlTable = "SELECT productseller_id, date_time, product_type, quantity, adjustment_reason FROM productseller";
+$sqlTable = "SELECT order_id, date_time, customer_name, product_type, quantity FROM orders";
 
 $where_clauses_table = [];
 $params_table = [];
@@ -113,9 +101,8 @@ if ($productType != 'All') {
     $params_table[] = $productType;
     $param_types_table .= "s";
 }
-
 if (!empty($searchTerm)) {
-    $where_clauses_table[] = "(product_type LIKE ? OR adjustment_reason LIKE ?)";
+    $where_clauses_table[] = "(product_type LIKE ? OR customer_name LIKE ?)";
     $likeTermTable = '%' . $searchTerm . '%';
     $params_table[] = $likeTermTable;
     $params_table[] = $likeTermTable;
@@ -151,7 +138,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productseller Dashboard - <?= SITE_NAME ?></title>
+    <title>Orders Dashboard - <?= SITE_NAME ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -191,22 +178,30 @@ $conn->close();
                     <span class="nav-item-name">Cold Storage</span>
                 </a>
                 <a href="..\lossaduitor\dashboard-1.php" class="nav-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
                         <line x1="12" y1="8" x2="12" y2="12" />
                         <line x1="12" y1="16" x2="12.01" y2="16" />
                     </svg>
                     <span class="nav-item-name">Loss Auditor</span>
                 </a>
-                <a href="../productseller/productseller.php" class="nav-item active">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <a href="../productseller/productseller-dashboard.php" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M16 12H8" />
                         <path d="M12 8v8" />
                     </svg>
                     <span class="nav-item-name">Productseller</span>
+                </a>
+                 <a href="orders-dashboard.php" class="nav-item active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="10" y2="9" />
+                    </svg>
+                    <span class="nav-item-name">Orders</span>
                 </a>
             </nav>
         </aside>
@@ -214,10 +209,10 @@ $conn->close();
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1 class="page-title">Productseller Dashboard</h1>
+                    <h1 class="page-title">Orders Dashboard</h1>
                     <div class="breadcrumb">
                         <span><a href="../piash/dashboard.php">Home</a></span> &gt;
-                        <span>Productseller Dashboard</span>
+                        <span>Orders Dashboard</span>
                     </div>
                 </div>
                 <div class="header-right">
@@ -254,8 +249,8 @@ $conn->close();
                 <?php endif; ?>
                 
                 <div class="filter-controls p-3 mb-4 rounded shadow-sm">
-                    <h5 class="mb-3">Filter Productseller Entries</h5>
-                    <form id="filterForm" action="productseller-dashboard.php" method="GET">
+                    <h5 class="mb-3">Filter Order Entries</h5>
+                    <form id="filterForm" action="orders-dashboard.php" method="GET">
                         <div class="row g-3 align-items-end">
                             <div class="col-md-3">
                                 <label for="start-date" class="form-label">Start Date</label>
@@ -278,11 +273,11 @@ $conn->close();
                             </div>
                             <div class="col-md-3">
                                 <label for="search-term-filter" class="form-label">Search</label>
-                                <input type="text" class="form-control" id="search-term-filter" name="search-term" placeholder="Search product or reason..." value="<?= htmlspecialchars($searchTerm) ?>">
+                                <input type="text" class="form-control" id="search-term-filter" name="search-term" placeholder="Search product or customer..." value="<?= htmlspecialchars($searchTerm) ?>">
                             </div>
                             <div class="col-12 text-end">
                                 <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                <a href="productseller-dashboard.php" class="btn btn-secondary">Reset</a>
+                                <a href="orders-dashboard.php" class="btn btn-secondary">Reset</a>
                             </div>
                         </div>
                     </form>
@@ -292,8 +287,8 @@ $conn->close();
                     <div class="col-md-8">
                         <div class="card card-custom">
                             <div class="card-body">
-                                <h5 class="card-title">Productseller by Product Type</h5>
-                                <canvas id="productsellerChart" width="400" height="200"></canvas>
+                                <h5 class="card-title">Orders by Product Type</h5>
+                                <canvas id="ordersChart" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
@@ -301,11 +296,8 @@ $conn->close();
                         <div class="card card-custom h-100">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                 <h5 class="card-title text-center">Quick Actions</h5>
-                                <a href="addproductseller.php" class="btn btn-success my-2 w-75">
-                                    <i class="bi bi-plus-circle"></i> Add New Productseller Entry
-                                </a>
-                                <a href="productseller.php" class="btn btn-info my-2 w-75">
-                                    <i class="bi bi-list-ul"></i> View Productseller Data
+                                <a href="addorder.php" class="btn btn-success my-2 w-75">
+                                    <i class="bi bi-plus-circle"></i> Add New Order
                                 </a>
                             </div>
                         </div>
@@ -314,15 +306,15 @@ $conn->close();
 
                 <div class="card card-custom mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Productseller Entries</h5>
+                        <h5 class="card-title">Order Entries</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Date & Time</th>
+                                        <th>Customer Name</th>
                                         <th>Product Type</th>
                                         <th>Quantity</th>
-                                        <th>Adjustment Reason</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -331,18 +323,18 @@ $conn->close();
                                         <?php foreach ($tableData as $row): ?>
                                             <tr>
                                                 <td><?= htmlspecialchars($row['date_time']) ?></td>
+                                                <td><?= htmlspecialchars($row['customer_name']) ?></td>
                                                 <td><?= htmlspecialchars($row['product_type']) ?></td>
                                                 <td><?= htmlspecialchars($row['quantity']) ?></td>
-                                                <td><?= htmlspecialchars($row['adjustment_reason']) ?></td>
                                                 <td class="text-center">
-                                                    <a href="editproductseller.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
-                                                    <a href="deleteproductseller.php?id=<?= htmlspecialchars($row['productseller_id']) ?>" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this productseller entry?');"><i class="bi bi-trash"></i></a>
+                                                    <a href="editorder.php?id=<?= htmlspecialchars($row['order_id']) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="deleteorder.php?id=<?= htmlspecialchars($row['order_id']) ?>" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this order entry?');"><i class="bi bi-trash"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <tr>
-                                            <td colspan="5" class="text-center">No productseller entries found.</td>
+                                            <td colspan="5" class="text-center">No orders found.</td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
@@ -357,7 +349,7 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const chartCtx = document.getElementById('productsellerChart');
+            const chartCtx = document.getElementById('ordersChart');
             const chartLabels = <?= json_encode($chartLabels) ?>;
             const chartData = <?= json_encode($chartData) ?>;
             const chartBackgroundColor = <?= json_encode($chartBackgroundColor) ?>;
@@ -367,7 +359,7 @@ $conn->close();
                 data: {
                     labels: chartLabels,
                     datasets: [{
-                        label: 'Total Productseller Quantity',
+                        label: 'Total Order Quantity',
                         data: chartData,
                         backgroundColor: chartBackgroundColor,
                         borderColor: chartBackgroundColor.map(color => color.replace(')', ', 0.8)')),
@@ -403,7 +395,7 @@ $conn->close();
                                         label += ': ';
                                     }
                                     if (context.parsed.y !== null) {
-                                        label += context.parsed.y + ' kg';
+                                        label += context.parsed.y + ' units';
                                     }
                                     return label;
                                 }
@@ -412,28 +404,6 @@ $conn->close();
                     }
                 }
             });
-
-            // Replicate header search behavior for the form filter
-            const headerSearchInput = document.querySelector('.header .search-input');
-            const filterFormSearchInput = document.getElementById('search-term-filter');
-            const headerSearchButton = document.querySelector('.header button[type="submit"]');
-            const filterForm = document.getElementById('filterForm');
-
-            if (headerSearchInput && filterFormSearchInput && headerSearchButton && filterForm) {
-                headerSearchButton.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    filterFormSearchInput.value = headerSearchInput.value;
-                    filterForm.submit();
-                });
-
-                headerSearchInput.addEventListener('keypress', function(event) {
-                    if (event.key === 'Enter') {
-                         event.preventDefault();
-                         filterFormSearchInput.value = headerSearchInput.value;
-                         filterForm.submit();
-                    }
-                });
-            }
         });
     </script>
 </body>
