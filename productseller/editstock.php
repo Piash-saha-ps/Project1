@@ -1,211 +1,175 @@
-
 <?php
-// editstock.php
-
-// Includes (DO NOT CHANGE per user instruction)
 include 'includes/config.php';
-include 'includes/dbConnection.php'; // Include database connection
-include 'includes/functions.php'; // Include any helper functions
+include 'includes/dbConnection.php';
+include 'includes/functions.php';
+session_start();
 
-// Start session for messages
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+$productsellerData = null;
+$errors = [];
 
-$pageTitle = "Edit Inventory Item"; // Set page title for header
-$item = null; // Variable to hold item data for displaying the form
-$itemId = null; // Variable to hold the item ID
-$error_message = '';
-$success_message = ''; // Initialize success message
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $productseller_id = sanitize($_GET['id']);
 
-// Check if the database connection is available
-// We check for $conn here because we cannot change dbConnection.php to handle connection errors gracefully
-if (!$conn) {
-     $error_message = "Database connection failed.";
-     // We won't redirect immediately here, so the error can be displayed on the page.
-}
+    $sql_fetch = "SELECT productseller_id, date_time, product_type, quantity, adjustment_reason FROM productseller WHERE productseller_id = ?";
 
-// --- Handle POST request for updating the item ---
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $conn) {
-    // Get and validate the item ID from the hidden input field
-    $itemId = filter_var($_POST['item_id'] ?? null, FILTER_VALIDATE_INT);
-    // Get and sanitize/validate the updated item name and quantity
-    // Using the sanitize function from functions.php (assuming it exists and works as intended)
-    $itemName = trim($_POST['item_name'] ?? '');
-    // Use filter_var for quantity validation and sanitization
-    $itemQuantity = filter_var($_POST['item_quantity'] ?? 0, FILTER_VALIDATE_INT); // Use FILTER_VALIDATE_FLOAT if quantity is decimal
+    if ($stmt_fetch = $conn->prepare($sql_fetch)) {
+        $stmt_fetch->bind_param("i", $productseller_id);
+        $stmt_fetch->execute();
+        $result_fetch = $stmt_fetch->get_result();
 
-    // Validation checks
-    if ($itemId === false || $itemId <= 0) {
-         $error_message = "Invalid item ID for update.";
-    } elseif (empty($itemName)) {
-        $error_message = "Item name cannot be empty.";
-    } elseif ($itemQuantity === false || $itemQuantity < 0) {
-         $error_message = "Invalid quantity provided.";
+        if ($result_fetch->num_rows === 1) {
+            $productsellerData = $result_fetch->fetch_assoc();
+            list($productsellerData['productsellerDate'], $productsellerData['productsellerTime']) = explode(' ', $productsellerData['date_time']);
+        } else {
+            $_SESSION['error_message'] = "Productseller entry not found.";
+            header("Location: productseller.php");
+            exit();
+        }
+
+        $stmt_fetch->close();
     } else {
-        // Inputs are valid, proceed with database update on the 'inventory' table
-
-        // Prepare the SQL UPDATE statement using a prepared statement
-        $sql = "UPDATE inventory SET name = ?, quantity = ? WHERE id = ?";
-
-        // Prepare the statement
-        if ($stmt = $conn->prepare($sql)) {
-            // Bind parameters: s=string (name), i=integer (quantity), i=integer (id)
-             // Use "sdi" if your quantity column is DECIMAL/FLOAT
-            $stmt->bind_param("sii", $itemName, $itemQuantity, $itemId);
-
-            // Execute the prepared statement
-            if ($stmt->execute()) {
-                // Check if any rows were affected by the update
-                if ($stmt->affected_rows > 0) {
-                     $_SESSION['success_message'] = "Inventory item updated successfully.";
-                } else {
-                     // No rows affected might mean the data was the same or ID didn't exist
-                     $_SESSION['success_message'] = "Inventory item details were not changed."; // Or a different message
-                }
-                 // Redirect back to the dashboard after a successful update
-                 header("Location: productseller.php");
-                 exit(); // Stop script execution after redirection
-            } else {
-                // If execution failed, set an error message and log the error
-                $error_message = "Error updating inventory item: " . $stmt->error;
-                 error_log("MySQL Execute Error (editstock.php - UPDATE): " . $stmt->error); // Log the specific SQL error
-            }
-
-            // Close the prepared statement
-            $stmt->close();
-
-        } else {
-             // If statement preparation failed
-             $error_message = "Database error preparing update statement: " . $conn->error;
-             error_log("MySQL Prepare Error (editstock.php - PREPARE UPDATE): " . $conn->error); // Log the specific SQL error
-        }
+        $_SESSION['error_message'] = "Database error fetching record: " . $conn->error;
+        header("Location: productseller.php");
+        exit();
     }
-} // End of POST request handling
+
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $productseller_id = sanitize($_POST['id']);
+    $productType = sanitize($_POST['productType']);
+    $quantity = filter_var($_POST['quantity'], FILTER_VALIDATE_FLOAT);
+    $adjustmentReason = sanitize($_POST['adjustmentReason']);
+    $productsellerDate = sanitize($_POST['productsellerDate']);
+    $productsellerTime = sanitize($_POST['productsellerTime']);
+    
+
+    $dateTime = $productsellerDate . ' ' . $productsellerTime;
+
+    if (empty($productseller_id) || !is_numeric($productseller_id)) {
+         $errors[] = "Invalid productseller entry ID.";
+    }
+    if (empty($productType)) {
+        $errors[] = "Product Type is required.";
+    }
+    if ($quantity === false || $quantity <= 0) {
+        $errors[] = "Quantity must be a positive number.";
+    }
+    if (empty($adjustmentReason)) {
+        $errors[] = "Reason is required.";
+    }
+    if (empty($productsellerDate)) {
+        $errors[] = "Date is required.";
+    }
+    if (empty($productsellerTime)) {
+        $errors[] = "Time is required.";
+    }
 
 
-// --- Handle GET request to display the edit form ---
-// This part runs when the user clicks the "Edit" link on the dashboard
-// It also runs if the POST request above failed validation or execution,
-// allowing the user to see the form again with error messages.
-if ($_SERVER["REQUEST_METHOD"] == "GET" || ($error_message && $_SERVER["REQUEST_METHOD"] == "POST")) {
+    if (empty($errors)) {
+        $sql_update = "UPDATE productseller SET date_time = ?, product_type = ?, quantity = ?, adjustment_reason = ? WHERE productseller_id = ?";
 
-    // Get the item ID from the URL (e.g., editstock.php?id=123) for GET requests
-    // If it was a POST request with errors, the item_id might be in $_POST
-    $itemId = filter_var($_GET['id'] ?? $_POST['item_id'] ?? null, FILTER_VALIDATE_INT);
-
-    // Validate the item ID
-    if ($itemId === false || $itemId <= 0) {
-        $error_message = "Invalid item ID provided for editing.";
-        // We won't redirect immediately, so the error can be displayed.
-    } elseif ($conn) { // Only try to fetch if DB connection is available
-        // Fetch the existing item data from the database based on the ID
-        $sql = "SELECT id, name, quantity FROM inventory WHERE id = ?";
-        if ($stmt = $conn->prepare($sql)) {
-            // Bind the item ID parameter
-            $stmt->bind_param("i", $itemId); // 'i' indicates an integer parameter
-
-            // Execute the statement
-            $stmt->execute();
-
-            // Get the result set
-            $result = $stmt->get_result();
-
-            // Check if an item with the given ID was found
-            if ($result->num_rows == 1) {
-                // Fetch the item data as an associative array
-                $item = $result->fetch_assoc();
+        if ($stmt_update = $conn->prepare($sql_update)) {
+            $stmt_update->bind_param("ssdsi", $dateTime, $productType, $quantity, $adjustmentReason, $productseller_id);
+            if ($stmt_update->execute()) {
+                if ($stmt_update->affected_rows > 0) {
+                    $_SESSION['success_message'] = "Productseller entry updated successfully.";
+                } else {
+                    $_SESSION['info_message'] = "No changes were made to the productseller entry.";
+                }
+                header("Location: productseller.php");
+                exit();
             } else {
-                // If no item was found with that ID
-                $error_message = "Inventory item not found.";
-                 // We won't redirect immediately, so the error can be displayed.
+                $errors[] = "Error updating productseller entry: " . $stmt_update->error;
             }
-
-            // Close the statement and free the result set
-            $stmt->close();
-            $result->free();
-
+            $stmt_update->close();
         } else {
-            // If statement preparation failed
-            $error_message = "Database error fetching item data: " . $conn->error;
-            error_log("MySQL Prepare Error (editstock.php - SELECT): " . $conn->error); // Log the specific SQL error
+             $errors[] = "Database error preparing update statement: " . $conn->error;
         }
-    } // End of fetch if $conn is available
+        $productsellerData = [ 
+            'productseller_id' => $productseller_id,
+            'product_type' => $productType, 
+            'quantity' => $_POST['quantity'],
+            'adjustment_reason' => $adjustmentReason,
+            'productsellerDate' => $productsellerDate,
+            'productsellerTime' => $productsellerTime,
+            'date_time' => $dateTime
+        ];
+    }
+} else {
+    $_SESSION['error_message'] = "Invalid request.";
+    header("Location: productseller.php");
+    exit();
 }
-
-
-// --- Display the Edit Form ---
-// Note: header.php and footer.php are included to provide the page structure.
-// Assuming header.php starts the HTML and body, and footer.php closes them.
-// Assuming header.php also includes the sidebar and main content container divs.
+$conn->close();
 ?>
-
-<?php
-// Include header (DO NOT CHANGE per user instruction)
-// Assuming header.php includes dbConnection.php and starts the HTML, body, and main container
-include 'includes/header.php';
-?>
-
-<main class="main-content">
-    <section class="dashboard-content p-3">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-black border-secondary text-white">
-                        <h5 class="card-title mb-0">Edit Inventory Item</h5>
-                    </div>
-                    <div class="card-body">
-                         <?php
-                        // Display session messages if they exist (from previous redirects)
-                        if (isset($_SESSION['success_message'])): ?>
-                            <div class="alert alert-success text-white"><?= htmlspecialchars($_SESSION['success_message']) ?></div>
-                            <?php unset($_SESSION['success_message']);
-                        endif; ?>
-                        <?php if ($error_message): // Display current page error message ?>
-                            <div class="alert alert-danger text-white"><?= htmlspecialchars($error_message) ?></div>
-                        <?php endif; ?>
-                         <?php
-                         // Check for database connection error message from dbConnection.php if it sets one
-                         if (isset($conn) && !$conn): ?>
-                             <div class="alert alert-danger text-white">Database connection failed. Cannot edit item.</div>
-                         <?php endif; ?>
-
-
-                        <?php if ($item && isset($conn) && $conn): // Only show the form if item data is loaded and DB connection is successful ?>
-                        <form action="editstock.php" method="POST">
-                            <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']) ?>">
-
-                            <div class="mb-3">
-                                <label for="itemName" class="form-label text-white">Item Name:</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary" id="itemName" name="item_name" value="<?= htmlspecialchars($item['name']) ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="itemQuantity" class="form-label text-white">Quantity (kg/units):</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary" id="itemQuantity" name="item_quantity" value="<?= htmlspecialchars($item['quantity']) ?>" min="0" required>
-                            </div>
-                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                                 <a href="productseller.php" class="btn btn-secondary ms-2">Cancel</a>
-                            </div>
-                        </form>
-                        <?php elseif (!isset($conn) || !$conn): ?>
-                             <p class="text-center text-white">Cannot load item data due to a database connection issue.</p>
-                        <?php else: ?>
-                             <p class="text-center text-white">Item data could not be loaded.</p>
-                        <?php endif; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Productseller Entry - <?= SITE_NAME ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="main-content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card card-custom p-4">
+                            <h2 class="card-title text-center">Edit Productseller Entry</h2>
+                            <?php if (!empty($errors)): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <ul class="mb-0">
+                                        <?php foreach ($errors as $error): ?>
+                                            <li><?= htmlspecialchars($error) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($productsellerData): ?>
+                                <form action="editstock.php" method="POST">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($productsellerData['productseller_id']) ?>">
+                                    <div class="mb-3">
+                                        <label for="productType" class="form-label">Product Type</label>
+                                        <input type="text" class="form-control" id="productType" name="productType" value="<?= htmlspecialchars($productsellerData['product_type']) ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="quantity" class="form-label">Quantity</label>
+                                        <input type="number" step="0.01" class="form-control" id="quantity" name="quantity" value="<?= htmlspecialchars($productsellerData['quantity']) ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="adjustmentReason" class="form-label">Adjustment Reason</label>
+                                        <textarea class="form-control" id="adjustmentReason" name="adjustmentReason" rows="3" required><?= htmlspecialchars($productsellerData['adjustment_reason']) ?></textarea>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="productsellerDate" class="form-label">Date</label>
+                                            <input type="date" class="form-control" id="productsellerDate" name="productsellerDate" value="<?= htmlspecialchars($productsellerData['productsellerDate']) ?>" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="productsellerTime" class="form-label">Time</label>
+                                            <input type="time" class="form-control" id="productsellerTime" name="productsellerTime" value="<?= htmlspecialchars($productsellerData['productsellerTime']) ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                         <a href="productseller.php" class="btn btn-outline-secondary">Cancel</a>
+                                    </div>
+                                </form>
+                            <?php else: ?>
+                                <p class="text-white text-center">Productseller entry not found or invalid request.</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+        </main>
+    </div>
 
-<?php
-// Include footer (DO NOT CHANGE per user instruction)
-// Assuming footer.php closes the main and app-container divs, and body/html tags
-// You might need to create a simple footer.php if you don't have one.
-// Example footer.php: </div></div></body></html>
-?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+
 </body>
 </html>
