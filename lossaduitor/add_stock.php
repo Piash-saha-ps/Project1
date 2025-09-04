@@ -301,7 +301,7 @@ $conn->close(); // Close connection at the end of the script
                                                 <option value="">Select Product Type</option>
                                                 <option value="Beef" <?= (($_POST['productType'] ?? '') === 'Beef') ? 'selected' : '' ?>>Beef</option>
                                                 <option value="Pork" <?= (($_POST['productType'] ?? '') === 'Pork') ? 'selected' : '' ?>>Pork</option>
-                                                <option value="Poultry" <?= (($_POST['productType'] ?? '') === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
+                                                <option value="Poultry"<?= (($_POST['productType']??'')=== 'Poultry')?'selected' : '' ?>>Poultry</option>
                                                 <option value="Lamb" <?= (($_POST['productType'] ?? '') === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
                                             </select>
                                         </div>

@@ -8,16 +8,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_time = $_POST['date_time'];
     $facility = $_POST['facility'];
     $stage = $_POST['stage'];
-    $product_type = $_POST['product_type'];
+    $productType = sanitize($_POST['productType']);
     $quantity_lost = $_POST['quantity_lost'];
     $loss_reason = $_POST['loss_reason'];
-
+    
     // Insert the data into the database
     $sql = "INSERT INTO loststock (date_time, facility, stage, product_type, quantity_lost, loss_reason) 
             VALUES (?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("ssssds", $date_time, $facility, $stage, $product_type, $quantity_lost, $loss_reason);
+        $stmt->bind_param("ssssds", $date_time, $facility, $stage, $productType, $quantity_lost, $loss_reason);
         if ($stmt->execute()) {
             $success_message = "Loss data added successfully!";
             // Redirect to dashboard after successful submission

@@ -486,9 +486,15 @@ $conn->close(); // Close connection at the very end of the script
 </div>
 
             <div class="mb-3">
-                <label for="product_type" class="form-label">Product Type</label>
-                <input type="text" class="form-control bg-dark text-light" id="product_type" name="product_type" required>
-            </div>
+    <label for="productType" class="form-label text-white">Product Type <span class="text-danger">*</span></label>
+    <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
+        <option value="">Select Product Type</option>
+        <option value="Beef" <?= (($_POST['productType'] ?? '') === 'Beef') ? 'selected' : '' ?>>Beef</option>
+        <option value="Pork" <?= (($_POST['productType'] ?? '') === 'Pork') ? 'selected' : '' ?>>Pork</option>
+        <option value="Poultry"<?= (($_POST['productType']??'')=== 'Poultry')?'selected' : '' ?>>Poultry</option>
+        <option value="Lamb" <?= (($_POST['productType'] ?? '') === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
+    </select>
+</div>
             <div class="mb-3">
                 <label for="quantity_lost" class="form-label">Quantity Lost (kg)</label>
                 <input type="number" step="0.01" class="form-control bg-dark text-light" id="quantity_lost" name="quantity_lost" required>
