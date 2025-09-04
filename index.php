@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Inventory and post-harvest loss management system for perishable meat-based products" />
-    <meta name="author" content="Brandson " />
-    <title>Brandson  - Farm Fresh Meat</title>
+    <meta name="author" content="Inventory" />
+    <title>Inventory  - Farm Fresh Meat</title>
     <link rel="icon" type="image/x-icon" href="assets/img/logo.png" />
 
     <!-- Font Awesome icons (optional) -->
@@ -53,8 +53,8 @@
     <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
         <!-- Logo on the left -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="assets/img/logo.png" alt="Brandson Logo" style="width: 50px; height: auto;" class="me-2"/>
-            <span>Brandson</span>
+            <img src="assets/img/logo.png" alt="IN" style="width: 50px; height: auto;" class="me-2"/>
+            <span>Inventory</span>
         </a>
 
         <!-- Toggler for mobile -->
@@ -93,7 +93,7 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="display-5">Trusted Meat Quality Management</h2>
-<p>Brandson ensures consistent quality across your beef, lamb, and chicken inventory. Track sourcing, processing, and handling to deliver meat your customers can trust.</p>
+<p>Inventory ensures consistent quality across your beef, lamb, and chicken inventory. Track sourcing, processing, and handling to deliver meat your customers can trust.</p>
 
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                 <div class="col-lg-6">
                     <div class="p-5">
                         <h2 class="display-5">Reliable Cold Chain for Quality Assurance</h2>
-<p>Maintain the highest meat standards with real-time monitoring of cold chain conditions. Brandson Moto helps you guarantee freshness and safety for every cut of beef, lamb, and chicken.</p>
+<p>Maintain the highest meat standards with real-time monitoring of cold chain conditions. Inventory Moto helps you guarantee freshness and safety for every cut of beef, lamb, and chicken.</p>
 
                     </div>
                 </div>
@@ -140,7 +140,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-black">
         <div class="container px-5">
-            <p class="m-0 text-center text-white small">&copy; Brandson 2025. All rights reserved.</p>
+            <p class="m-0 text-center text-white small">&copy; Inventory 2025. All rights reserved.</p>
         </div>
     </footer>
 
