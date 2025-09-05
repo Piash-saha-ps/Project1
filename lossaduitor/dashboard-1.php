@@ -223,7 +223,7 @@ $conn->close(); // Close connection at the very end of the script
                     </svg>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
-                <a href="analytics.php" class="nav-item">
+                <a href="../All/analytics.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
                         <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -246,8 +246,6 @@ $conn->close(); // Close connection at the very end of the script
     </svg>
     <span class="nav-item-name">Cold Storage</span>
 </a>
-
-
 <a href="..\lossaduitor\dashboard-1.php" class="nav-item active">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
@@ -268,7 +266,7 @@ $conn->close(); // Close connection at the very end of the script
                     </svg>
                     <span class="nav-item-name">Productseller</span>
                 </a>
-                 <a href="orders-dashboard.php" class="nav-item active">
+                 <a href="../productseller/orders-dashboard.php" class="nav-item active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                         <polyline points="14 2 14 8 20 8" />
@@ -277,11 +275,10 @@ $conn->close(); // Close connection at the very end of the script
                         <line x1="10" y1="9" x2="10" y2="9" />
                     </svg>
                     <span class="nav-item-name">Orders</span>
-                </a>               
+                </a>
             </nav>
         </aside>
             
-
         <main class="main-content">
             <?php // include 'includes/header.php'; ?>
             <header class="header">

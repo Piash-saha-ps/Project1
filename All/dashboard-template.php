@@ -33,13 +33,13 @@ if (isset($_SESSION['success_message'])) {
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="logo.png" alt="IN" width="28" height="28">
+                    <img src="assets/img/logo.png" alt="" width="28" height="28">
                     <span class="brand-name">Inventory</span>
                 </div>
             </div>
             
             <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item active">
+                <a href="../All/dashboard.php" class="nav-item ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="3" y1="9" x2="21" y2="9"></line>
@@ -47,7 +47,7 @@ if (isset($_SESSION['success_message'])) {
                     </svg>
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
-                <a href="analytics.php" class="nav-item">
+                <a href="../All/analytics.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
                         <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -55,7 +55,7 @@ if (isset($_SESSION['success_message'])) {
                     </svg>
                     <span class="nav-item-name">Analytics</span>
                 </a>
-                <a href="add_stock.php" class="nav-item">
+                <a href="../All/add_stock.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="1" y="3" width="15" height="13"></rect>
                         <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
@@ -90,7 +90,7 @@ if (isset($_SESSION['success_message'])) {
                     </svg>
                     <span class="nav-item-name">Productseller</span>
                 </a>
-                 <a href="orders-dashboard.php" class="nav-item active">
+                 <a href="../productseller/orders-dashboard.php" class="nav-item active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                         <polyline points="14 2 14 8 20 8" />
