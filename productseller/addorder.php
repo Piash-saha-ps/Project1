@@ -76,7 +76,7 @@ $conn->close();
                     <form action="addorder.php" method="POST">
                         <div class="mb-3">
                             <label for="date_time" class="form-label text-white">Date & Time</label>
-                            <input type="datetime-local" class="form-select bg-dark text-white border-secondary" id="date_time" name="date_time" required>
+                            <input type="datetime-local" class="form-select bg-dark text-white border-secondary"" id="date_time" name="date_time" required>
                         </div>
                         <div class="mb-3">
                             <label for="customer_name" class="form-label text-white">Customer Name</label>
