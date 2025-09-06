@@ -493,13 +493,13 @@ $conn->close(); // Close connection at the very end of the script
 </div>
 
             <div class="mb-3">
-    <label for="productType" class="form-label text-white">Product Type <span class="text-danger">*</span></label>
-    <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
-        <option value="">Select Product Type</option>
-        <option value="Beef" <?= (($_POST['productType'] ?? '') === 'Beef') ? 'selected' : '' ?>>Beef</option>
-        <option value="Pork" <?= (($_POST['productType'] ?? '') === 'Pork') ? 'selected' : '' ?>>Pork</option>
-        <option value="Poultry"<?= (($_POST['productType']??'')=== 'Poultry')?'selected' : '' ?>>Poultry</option>
-        <option value="Lamb" <?= (($_POST['productType'] ?? '') === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
+    <label for="productType" class="form-label text-white">Meat Type <span class="text-danger">*</span></label>
+    <select class="form-select bg-dark text-white border-secondary" id="MeatType" name="productType" required>
+        <option value="">Select Meat Type</option>
+        <option value="Beef" <?= (($_POST['MeatType'] ?? '') === 'Beef') ? 'selected' : '' ?>>Beef</option>
+        <option value="Pork" <?= (($_POST['MeatType'] ?? '') === 'Pork') ? 'selected' : '' ?>>Pork</option>
+        <option value="Poultry"<?= (($_POST['MeatType']??'')=== 'Poultry')?'selected' : '' ?>>Poultry</option>
+        <option value="Lamb" <?= (($_POST['MeatType'] ?? '') === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
     </select>
 </div>
             <div class="mb-3">
@@ -568,11 +568,7 @@ $conn->close(); // Close connection at the very end of the script
             }
         }
 
-        // You had a search input and button in the header that wasn't part of the form.
-        // We've now added a search input directly into the main filter form.
-        // If you still want the header search to trigger the form submission,
-        // you can use JavaScript to copy the value from the header search input
-        // to the filter form's search input and then submit the form.
+   
 
         document.addEventListener('DOMContentLoaded', function() {
             const headerSearchInput = document.querySelector('.header .search-input');

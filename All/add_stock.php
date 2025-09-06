@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_stock'])) {
         $sql = "UPDATE inventory1 SET meat_type=?, batch_number=?, quantity=?, supplier=?, cost=?, total_cost=?, processing_date=?, expiration_date=?, location=? WHERE id=?";
         $stmt = $conn->prepare($sql);
         // Updated bind_param to include the new 'totalCost' field (d for double)
-        $stmt->bind_param("ssdssssss", $type, $batch, $quantity, $supplier, $cost, $totalCost, $processingDate, $expirationDate, $location, $id);
+        $stmt->bind_param("ssdssssssi", $type, $batch, $quantity, $supplier, $cost, $totalCost, $processingDate, $expirationDate, $location, $id);
         
         if ($stmt->execute()) {
             $_SESSION['success_message'] = "Stock updated successfully!";
@@ -160,7 +160,7 @@ unset($_SESSION['error_message']);
             
             <nav class="sidebar-nav">
                 <a href="../All/dashboard.php" class="nav-item ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <svg xmlns="http://www.w3.00/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="3" y1="9" x2="21" y2="9"></line>
                         <line x1="9" y1="21" x2="9" y2="9"></line>
@@ -168,7 +168,7 @@ unset($_SESSION['error_message']);
                     <span class="nav-item-dashboard">Dashboard</span>
                 </a>
                 <a href="../All/analytics.php" class="nav-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <svg xmlns="http://www.w3.00/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
                         <line x1="12" y1="20" x2="12" y2="4"></line>
                         <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -176,7 +176,7 @@ unset($_SESSION['error_message']);
                     <span class="nav-item-name">Analytics</span>
                 </a>
                 <a href="../All/add_stock.php" class="nav-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <svg xmlns="http://www.w3.00/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="1" y="3" width="15" height="13"></rect>
                         <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
                         <circle cx="5.5" cy="18.5" r="2.5"></circle>
@@ -191,7 +191,7 @@ unset($_SESSION['error_message']);
     <span class="nav-item-name">Cold Storage</span>
 </a>
 <a href="..\lossaduitor\dashboard-1.php" class="nav-item active">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+    <svg xmlns="http://www.w3.00/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
         <path d="M10.29 3.86L3.86 10.29a2 2 0 0 0 0 2.83l6.43 6.43a2 2 0 0 0 2.83 0l6.43-6.43a2 2 0 0 0 0-2.83L13.12 3.86a2 2 0 0 0-2.83 0z" />
         <line x1="12" y1="8" x2="12" y2="12" />
@@ -200,7 +200,7 @@ unset($_SESSION['error_message']);
     <span class="nav-item-name">Loss Auditor</span>
 </a>
 <a href="../productseller/productseller.php" class="nav-item">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+    <svg xmlns="http://www.w3.00/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
         <circle cx="12" cy="12" r="10" />
         <path d="M16 12H8" />
         <path d="M12 8v8" />
@@ -385,7 +385,7 @@ unset($_SESSION['error_message']);
                     <h5 class="modal-title" id="editStockModalLabel">Edit Stock Entry</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="form-control">
                     <form id="edit-stock-form" action="add_stock.php" method="POST">
                         <input type="hidden" name="update_stock" value="1">
                         <input type="hidden" id="edit-id" name="stock_id">
@@ -401,19 +401,19 @@ unset($_SESSION['error_message']);
                         </div>
                         <div class="mb-3">
                             <label for="edit-batch" class="form-label">Batch Number</label>
-                            <input type="text" class="form-control" id="edit-batch" name="batch" required>
+                            <input type="text" class="form-control" id="edit-batch" name="batch" placeholder="e.g., A123-B456" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-quantity" class="form-label">Quantity (kg/lbs)</label>
-                            <input type="number" step="0.01" class="form-control" id="edit-quantity" name="quantity" required>
+                            <input type="number" step="0.01" class="form-control" id="edit-quantity" name="quantity" placeholder="e.g., 50.00" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-supplier" class="form-label">Supplier</label>
-                            <input type="text" class="form-control" id="edit-supplier" name="supplier" required>
+                            <input type="text" class="form-control" id="edit-supplier" name="supplier" placeholder="" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-cost" class="form-label">Cost ($)</label>
-                            <input type="number" step="0.01" class="form-control" id="edit-cost" name="cost" required>
+                            <label for="edit-cost" class="form-label">Cost per unit ($)</label>
+                            <input type="number" step="0.01" class="form-control" id="edit-cost" name="cost" placeholder="e.g., 12.50" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-totalCost" class="form-label">Total Cost ($)</label>
@@ -468,8 +468,13 @@ unset($_SESSION['error_message']);
             var quantityInput = document.getElementById('quantity');
             var costInput = document.getElementById('cost');
             if (quantityInput && costInput) {
+                // Attach event listeners to ensure the calculation is triggered reliably
                 quantityInput.addEventListener('input', calculateAddTotalCost);
+                quantityInput.addEventListener('keyup', calculateAddTotalCost);
+                quantityInput.addEventListener('change', calculateAddTotalCost);
                 costInput.addEventListener('input', calculateAddTotalCost);
+                costInput.addEventListener('keyup', calculateAddTotalCost);
+                costInput.addEventListener('change', calculateAddTotalCost);
             }
 
             // Function to calculate and display total cost for the Edit form
@@ -489,8 +494,13 @@ unset($_SESSION['error_message']);
             var editQuantityInput = document.getElementById('edit-quantity');
             var editCostInput = document.getElementById('edit-cost');
             if (editQuantityInput && editCostInput) {
+                // Attach event listeners to ensure the calculation is triggered reliably
                 editQuantityInput.addEventListener('input', calculateEditTotalCost);
+                editQuantityInput.addEventListener('keyup', calculateEditTotalCost);
+                editQuantityInput.addEventListener('change', calculateEditTotalCost);
                 editCostInput.addEventListener('input', calculateEditTotalCost);
+                editCostInput.addEventListener('keyup', calculateEditTotalCost);
+                editCostInput.addEventListener('change', calculateEditTotalCost);
             }
 
 

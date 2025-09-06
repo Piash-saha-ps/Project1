@@ -284,17 +284,6 @@ $conn->close();
                                 <input type="date" class="form-control" id="end-date" name="end-date" value="<?= htmlspecialchars($endDate) ?>">
                             </div>
                             <div class="col-md-3">
-                                <label for="product-type" class="form-label">Product Type</label>
-                                <select class="form-select" id="product-type" name="product-type">
-                                    <option value="All" <?= $productType == 'All' ? 'selected' : '' ?>>All</option>
-                                    <option value="Apparel" <?= $productType == 'Apparel' ? 'selected' : '' ?>>Apparel</option>
-                                    <option value="Electronics" <?= $productType == 'Electronics' ? 'selected' : '' ?>>Electronics</option>
-                                    <option value="Home Goods" <?= $productType == 'Home Goods' ? 'selected' : '' ?>>Home Goods</option>
-                                    <option value="Books" <?= $productType == 'Books' ? 'selected' : '' ?>>Books</option>
-                                    <option value="Jewelry" <?= $productType == 'Jewelry' ? 'selected' : '' ?>>Jewelry</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
                                 <label for="search-term-filter" class="form-label">Search</label>
                                 <input type="text" class="form-control" id="search-term-filter" name="search-term" placeholder="Search product or reason..." value="<?= htmlspecialchars($searchTerm) ?>">
                             </div>
