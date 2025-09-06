@@ -188,7 +188,22 @@ $conn->close();
     </style>
 </head>
 
-
+<body class="bg-dark text-light">
+    <div class="app-container">
+        <?php // include 'includes/sidebar.php'; ?>
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="logo.png" alt="IN" width="28" height="28">
+                    <span class="brand-name">Inventory</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                
+            </nav>
+        </aside>
         <main class="main-content">
             <?php // include 'includes/header.php'; ?>
             <header class="header">
@@ -269,7 +284,7 @@ $conn->close();
                                                 <label for="stage" class="form-label text-white">Stage <span class="text-danger">*</span></label>
                                                 <select class="form-select bg-dark text-white border-secondary" id="stage" name="stage" required>
                                                     <option value="">Select Stage</option>
-                                                     <option value="Slaughter" <?= ($lossData['stage'] === 'Slaughter') ? 'selected' : '' ?>>Slaughter</option>
+                                                    <option value="Slaughter" <?= ($lossData['stage'] === 'Slaughter') ? 'selected' : '' ?>>Slaughter</option>
                                                     <option value="Processing" <?= ($lossData['stage'] === 'Processing') ? 'selected' : '' ?>>Processing</option>
                                                     <option value="Storage" <?= ($lossData['stage'] === 'Storage') ? 'selected' : '' ?>>Storage</option>
                                                     <option value="Handling" <?= ($lossData['stage'] === 'Handling') ? 'selected' : '' ?>>Handling</option>
@@ -278,17 +293,16 @@ $conn->close();
                                                     <option value="Spoiled" <?= ($lossData['stage'] === 'Spoiled') ? 'selected' : '' ?>>Spoiled</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
                                             <div class="col-md-6">
-                                                <label for="productType" class="form-label text-white">Meatt Type <span class="text-danger">*</span></label>
-                                                <select class="form-select bg-dark text-white border-secondary" id="MeatType" name="productType" required>
+                                                <label for="productType" class="form-label text-white">MeatType <span class="text-danger">*</span></label>
+                                                <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
                                                     <option value="">Select Meat Type</option>
-                                                     <option value="Beef" <?= ($lossData['MeatType'] === 'Beef') ? 'selected' : '' ?>>Beef</option>
-                                                    <option value="Pork" <?= ($lossData['MeatType'] === 'Pork') ? 'selected' : '' ?>>Pork</option>
-                                                    <option value="Poultry" <?= ($lossData['MeatType'] === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
-                                                    <option value="Lamb" <?= ($lossData['MeatType'] === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
+                                                    <option value="Beef" <?= ($lossData['product_type'] === 'Beef') ? 'selected' : '' ?>>Beef</option>
+                                                    <option value="Pork" <?= ($lossData['product_type'] === 'Pork') ? 'selected' : '' ?>>Pork</option>
+                                                    <option value="Poultry" <?= ($lossData['product_type'] === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
+                                                    <option value="Lamb" <?= ($lossData['product_type'] === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
                                                 </select>
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="quantityLost" class="form-label text-white">Quantity Lost (kg) <span class="text-danger">*</span></label>

@@ -46,20 +46,27 @@ $conn->close();
                     <h2 class="card-title text-center mb-4">Add New Productseller Entry</h2>
                     <form action="add_stock.php" method="POST">
                         <div class="mb-3">
-                            <label for="date_time" class="form-label">Date & Time</label>
-                            <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>
+                            <label for="date_time" class="form-label text-white">Date & Time</label>
+                            <input type="datetime-local" class="form-select bg-dark text-white border-secondary" id="date_time" name="date_time" required>
                         </div>
                         <div class="mb-3">
-                            <label for="productType" class="form-label">Product Type</label>
-                            <input type="text" class="form-control" id="productType" name="productType" required>
+                            <label for="productType" class="form-label text-white">Meat Type <span class="text-danger">*</span></label>
+                            <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
+                                <option value="">Select Meat Type</option>
+                                <option value="Beef" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Beef') ? 'selected' : '' ?>>Beef</option>
+                                <option value="Pork" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Pork') ? 'selected' : '' ?>>Pork</option>
+                                <option value="Poultry" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
+                                <option value="Lamb" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label text-white">Quantity</label>
+                            <input type="number" step="0.01" class="form-select bg-dark text-white border-secondary" id="quantity" name="quantity" required>
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Quantity</label>
-                            <input type="number" step="0.01" class="form-control" id="quantity" name="quantity" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="adjustmentReason" class="form-label">Adjustment Reason</label>
-                            <textarea class="form-control" id="adjustmentReason" name="adjustmentReason" rows="3" required></textarea>
+                            <label for="adjustmentReason" class="form-label text-white">Adjustment Reason</label>
+                            <textarea class="form-select bg-dark text-white border-secondary" id="adjustmentReason" name="adjustmentReason" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="productseller.php" class="btn btn-secondary">Cancel</a>

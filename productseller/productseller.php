@@ -159,7 +159,6 @@ $conn->close();
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -209,9 +208,6 @@ $conn->close();
     </svg>
     <span class="nav-item-name">Loss Auditor</span>
 </a>
-
-
-
                 <a href="../productseller/productseller.php" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <circle cx="12" cy="12" r="10" />
@@ -220,7 +216,7 @@ $conn->close();
                     </svg>
                     <span class="nav-item-name">Productseller</span>
                 </a>
-                 <a href="../productseller/orders-dashboard.php" class="nav-item active">
+                    <a href="../productseller/orders-dashboard.php" class="nav-item active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                         <polyline points="14 2 14 8 20 8" />
@@ -237,11 +233,11 @@ $conn->close();
             <header class="header">
                 <div class="header-left">
                     <h1 class="page-title">Productseller</h1>
-                </div>
+
                 <div class="header-right">
                     <div class="user-profile">
                         <div class="profile-button" id="profileButton">
-                            <i class="bi bi-person-circle"></i>
+                            
                         </div>
                         <div class="dropdown-menu" id="profileDropdown">
                             <a href="profile.php">Profile</a>
@@ -273,7 +269,7 @@ $conn->close();
                 
                 <div class="filter-controls p-3 mb-4 rounded shadow-sm">
                     <h5 class="mb-3">Filter Productseller Entries</h5>
-                    <form id="filterForm" action="productseller-dashboard.php" method="GET">
+                    <form id="filterForm" action="productseller.php" method="GET">
                         <div class="row g-3 align-items-end">
                             <div class="col-md-3">
                                 <label for="start-date" class="form-label">Start Date</label>
@@ -289,7 +285,7 @@ $conn->close();
                             </div>
                             <div class="col-12 text-end">
                                 <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                <a href="productseller-dashboard.php" class="btn btn-secondary">Reset</a>
+                                <a href="productseller.php" class="btn btn-secondary">Reset</a>
                             </div>
                         </div>
                     </form>
@@ -392,9 +388,9 @@ $conn->close();
                             }
                         },
                         x: {
-                             title: {
-                                display: true,
-                                text: 'Product Type'
+                               title: {
+                                 display: true,
+                                 text: 'Product Type'
                             }
                         }
                     },
@@ -420,24 +416,17 @@ $conn->close();
                 }
             });
 
-            const headerSearchInput = document.querySelector('.header .search-input');
+            // This script handles the interaction between the header search and the filter form.
+            const headerSearchForm = document.getElementById('headerSearchForm');
+            const headerSearchInput = document.getElementById('header-search-input');
             const filterFormSearchInput = document.getElementById('search-term-filter');
-            const headerSearchButton = document.querySelector('.header button[type="submit"]');
             const filterForm = document.getElementById('filterForm');
 
-            if (headerSearchInput && filterFormSearchInput && headerSearchButton && filterForm) {
-                headerSearchButton.addEventListener('click', function(event) {
-                    event.preventDefault();
+            if (headerSearchForm && headerSearchInput && filterFormSearchInput) {
+                headerSearchForm.addEventListener('submit', function(event) {
+                    // Update the value of the main filter search input with the header search value
+                    // before the form submits.
                     filterFormSearchInput.value = headerSearchInput.value;
-                    filterForm.submit();
-                });
-
-                headerSearchInput.addEventListener('keypress', function(event) {
-                    if (event.key === 'Enter') {
-                         event.preventDefault();
-                         filterFormSearchInput.value = headerSearchInput.value;
-                         filterForm.submit();
-                    }
                 });
             }
         });

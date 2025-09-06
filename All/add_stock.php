@@ -247,7 +247,7 @@ unset($_SESSION['error_message']);
                             <div class="col-md-6">
                                 <label for="type" class="form-label">Meat Type</label>
         
-                                <select class="form-select text-white border-secondary" id="type" name="type" required>     
+                                <select class="form-select" id="type" name="type" required>     
                                 <option value="">Select Product Type</option>
                                 <option value="Beef" <?= (($_POST['productType'] ?? '') === 'Beef') ? 'selected' : '' ?>>Beef</option>
                                 <option value="Pork" <?= (($_POST['productType'] ?? '') === 'Pork') ? 'selected' : '' ?>>Pork</option>

@@ -75,28 +75,26 @@ $conn->close();
                     <?php endif; ?>
                     <form action="addorder.php" method="POST">
                         <div class="mb-3">
-                            <label for="date_time" class="form-label">Date & Time</label>
-                            <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>
+                            <label for="date_time" class="form-label text-white">Date & Time</label>
+                            <input type="datetime-local" class="form-select bg-dark text-white border-secondary" id="date_time" name="date_time" required>
                         </div>
                         <div class="mb-3">
-                            <label for="customer_name" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                            <label for="customer_name" class="form-label text-white">Customer Name</label>
+                            <input type="text" class="form-select bg-dark text-white border-secondary" id="customer_name" name="customer_name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="product_type" class="form-label">Product Type</label>
-                            <select class="form-select" id="product_type" name="product_type" required>
-                                <?php if (!empty($productsellerData)): ?>
-                                    <?php foreach ($productsellerData as $product): ?>
-                                        <option value="<?= htmlspecialchars($product['product_type']) ?>"><?= htmlspecialchars($product['product_type']) ?></option>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <option value="">No products available</option>
-                                <?php endif; ?>
+                            <label for="productType" class="form-label text-white">Meat Type <span class="text-danger">*</span></label>
+                            <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
+                                <option value="">Select Meat Type</option>
+                                <option value="Beef" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Beef') ? 'selected' : '' ?>>Beef</option>
+                                <option value="Pork" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Pork') ? 'selected' : '' ?>>Pork</option>
+                                <option value="Poultry" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
+                                <option value="Lamb" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Quantity</label>
-                            <input type="number" step="0.01" class="form-control" id="quantity" name="quantity" required min="0.01">
+                            <label for="quantity" class="form-label text-white">Quantity</label>
+                            <input type="number" step="0.01" class="form-select bg-dark text-white border-secondary" id="quantity" name="quantity" required min="0.01">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="orders-dashboard.php" class="btn btn-secondary">Cancel</a>

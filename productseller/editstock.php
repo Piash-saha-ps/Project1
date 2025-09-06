@@ -131,26 +131,32 @@ $conn->close();
                             <?php if ($productsellerData): ?>
                                 <form action="editstock.php" method="POST">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($productsellerData['productseller_id']) ?>">
+                        <div class="mb-3">
+                            <label for="productType" class="form-label text-white">Meat Type <span class="text-danger">*</span></label>
+                            <select class="form-select bg-dark text-white border-secondary" id="productType" name="productType" required>
+                                <option value="">Select Meat Type</option>
+                                <option value="Beef" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Beef') ? 'selected' : '' ?>>Beef</option>
+                                <option value="Pork" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Pork') ? 'selected' : '' ?>>Pork</option>
+                                <option value="Poultry" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Poultry') ? 'selected' : '' ?>>Poultry</option>
+                                <option value="Lamb" <?= (isset($_POST['productType']) && $_POST['productType'] === 'Lamb') ? 'selected' : '' ?>>Lamb</option>
+                            </select>
+                        </div>
                                     <div class="mb-3">
-                                        <label for="productType" class="form-label">Product Type</label>
-                                        <input type="text" class="form-control" id="productType" name="productType" value="<?= htmlspecialchars($productsellerData['product_type']) ?>" required>
+                                        <label for="quantity" class="form-label text-white">Quantity</label>
+                                        <input type="number" step="0.01" class="form-select bg-dark text-white border-secondary" id="quantity" name="quantity" value="<?= htmlspecialchars($productsellerData['quantity']) ?>" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" step="0.01" class="form-control" id="quantity" name="quantity" value="<?= htmlspecialchars($productsellerData['quantity']) ?>" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="adjustmentReason" class="form-label">Adjustment Reason</label>
-                                        <textarea class="form-control" id="adjustmentReason" name="adjustmentReason" rows="3" required><?= htmlspecialchars($productsellerData['adjustment_reason']) ?></textarea>
+                                        <label for="adjustmentReason" class="form-label text-white">Adjustment Reason</label>
+                                        <textarea class="form-select bg-dark text-white border-secondary" id="adjustmentReason" name="adjustmentReason" rows="3" required><?= htmlspecialchars($productsellerData['adjustment_reason']) ?></textarea>
                                     </div>
                                      <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="productsellerDate" class="form-label">Date</label>
-                                            <input type="date" class="form-control" id="productsellerDate" name="productsellerDate" value="<?= htmlspecialchars($productsellerData['productsellerDate']) ?>" required>
+                                            <label for="productsellerDate" class="form-label text-white">Date</label>
+                                            <input type="date" class="form-select bg-dark text-white border-secondary" id="productsellerDate" name="productsellerDate" value="<?= htmlspecialchars($productsellerData['productsellerDate']) ?>" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="productsellerTime" class="form-label">Time</label>
-                                            <input type="time" class="form-control" id="productsellerTime" name="productsellerTime" value="<?= htmlspecialchars($productsellerData['productsellerTime']) ?>" required>
+                                            <input type="time" class="form-select bg-dark text-white border-secondary" id="productsellerTime" name="productsellerTime" value="<?= htmlspecialchars($productsellerData['productsellerTime']) ?>" required>
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
